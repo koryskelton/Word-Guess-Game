@@ -43,7 +43,7 @@ function resetGame() {
   guessedLetters = [];
   guessingWord = [];
 
-  // Make sure the hangman image is cleared
+  // CLear hangman image
   document.getElementById("hangmanImage").src = "cleared.png";
 
   // Build the guessing word and clear it out
@@ -74,12 +74,12 @@ function updateDisplay() {
       hasFinished = true;
   }
 };
-// Updates the image depending on how many guesses
+// Update the image depending on how many guesses
 function updateHangmanImage() {
   document.getElementById("hangmanImage").src = "assets/images/" + (maxTries - remainingGuesses) + ".png";
 };
 document.onkeydown = function(event) {
-  // If we finished a game, dump one keystroke and reset.
+  // If game finished, dump one keystroke and reset.
   if(hasFinished) {
       resetGame();
       hasFinished = false;
@@ -96,7 +96,7 @@ function makeGuess(letter) {
           gameStarted = true;
       }
 
-      // Make sure we didn't use this letter yet
+      // Dont allow duplicate letters
       if (guessedLetters.indexOf(letter) === -1) {
           guessedLetters.push(letter);
           evaluateGuess(letter);
@@ -107,8 +107,7 @@ function makeGuess(letter) {
   checkWin();
 };
 
-// This function takes a letter and finds all instances of 
-// appearance in the string and replaces them in the guess word.
+// Replaces space in word with letter
 function evaluateGuess(letter) {
   // Array to store positions of letters in string
   var positions = [];
@@ -120,12 +119,12 @@ function evaluateGuess(letter) {
       }
   }
 
-  // if there are no indicies, remove a guess and update the hangman image
+  // if there are no matches, remove a guess and update the hangman image
   if (positions.length <= 0) {
       remainingGuesses--;
       updateHangmanImage();
   } else {
-      // Loop through all the indicies and replace the '_' with a letter.
+      // Loop through all the matches and replace the '_' with a letter.
       for(var i = 0; i < positions.length; i++) {
           guessingWord[positions[i]] = letter;
       }
